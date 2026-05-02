@@ -389,12 +389,20 @@ h2 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  button {
+    transition: none;
+  }
+
+  .hero,
+  .hero::after,
+  .card,
+  .notice,
+  .orb,
+  .sparkline span,
+  .reason.is-changing,
+  .prompt.is-changing,
+  .ambient {
     animation: none !important;
-    scroll-behavior: auto !important;
-    transition: none !important;
   }
 }
 
