@@ -6,7 +6,11 @@ const reasons = [
   "You are allowed to begin again as many times as needed.",
   "A small step still counts as movement.",
   "You do not need to solve your whole life tonight.",
-  "There is still kindness you have not received yet."
+  "There is still kindness you have not received yet.",
+  "Some future day will be softer because you made it here.",
+  "There are people who would miss your exact laugh.",
+  "You can rest first and decide anything else later.",
+  "The next safe moment can be enough for now."
 ];
 
 const prompts = [
@@ -17,7 +21,21 @@ const prompts = [
   "Find one sound nearby and follow it for ten breaths.",
   "Loosen your jaw, lower your shoulders, unclench your hands.",
   "Step outside or open a window for one minute.",
-  "Pick the smallest useful task and do only that."
+  "Pick the smallest useful task and do only that.",
+  "Hold something cool and describe its texture to yourself.",
+  "Count backward from twenty with one slow breath between each number.",
+  "Look for one color in the room and find three places it appears."
+];
+
+const exercises = [
+  "Press each fingertip to your thumb and name one thing that is still okay.",
+  "Trace a square in the air: inhale up, hold across, exhale down, rest across.",
+  "Place a hand on your chest and feel three slow breaths arrive and leave.",
+  "Name one thing you can postpone until tomorrow.",
+  "Stretch your hands wide, then let them soften in your lap.",
+  "Choose a comforting object nearby and notice its weight for thirty seconds.",
+  "Write or whisper: “I only have to get through this minute.”",
+  "Relax your forehead, tongue, shoulders, stomach, and toes one by one."
 ];
 
 const checklistItems = [
@@ -25,7 +43,9 @@ const checklistItems = [
   "Eat something simple",
   "Take medication if prescribed",
   "Message one person",
-  "Rest without earning it"
+  "Rest without earning it",
+  "Step into fresh air",
+  "Wash your face or hands"
 ];
 
 // The cue changes halfway through the 8s CSS breathing cycle.
@@ -41,6 +61,8 @@ const reasonButton = document.querySelector("#reasonButton");
 const reasonText = document.querySelector("#reason");
 const promptButton = document.querySelector("#promptButton");
 const groundingPrompt = document.querySelector("#groundingPrompt");
+const exerciseButton = document.querySelector("#exerciseButton");
+const exercisePrompt = document.querySelector("#exercisePrompt");
 const breathingCue = document.querySelector("#breathingCue");
 const reasonForm = document.querySelector("#reasonForm");
 const customReason = document.querySelector("#customReason");
@@ -49,6 +71,7 @@ const checklist = document.querySelector("#checklist");
 
 let previousReason = reasonText.textContent.trim();
 let previousPrompt = groundingPrompt.textContent.trim();
+let previousExercise = exercisePrompt.textContent.trim();
 
 function loadJson(key, fallback) {
   try {
@@ -69,6 +92,14 @@ function chooseDifferent(items, previous) {
   }
 
   return available[Math.floor(Math.random() * available.length)];
+}
+
+function refreshText(element, value) {
+  element.classList.remove("is-changing");
+  // This forced reflow is intentional; it restarts the text animation before the class is re-added.
+  void element.offsetWidth;
+  element.textContent = value;
+  element.classList.add("is-changing");
 }
 
 function renderSavedReasons() {
@@ -129,12 +160,17 @@ function renderChecklist() {
 
 reasonButton.addEventListener("click", () => {
   previousReason = chooseDifferent(reasons, previousReason);
-  reasonText.textContent = previousReason;
+  refreshText(reasonText, previousReason);
 });
 
 promptButton.addEventListener("click", () => {
   previousPrompt = chooseDifferent(prompts, previousPrompt);
-  groundingPrompt.textContent = previousPrompt;
+  refreshText(groundingPrompt, previousPrompt);
+});
+
+exerciseButton.addEventListener("click", () => {
+  previousExercise = chooseDifferent(exercises, previousExercise);
+  refreshText(exercisePrompt, previousExercise);
 });
 
 reasonForm.addEventListener("submit", (event) => {
