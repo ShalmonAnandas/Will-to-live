@@ -64,7 +64,11 @@ function saveJson(key, value) {
 
 function chooseDifferent(items, previous) {
   const available = items.filter((item) => item !== previous);
-  return available[Math.floor(Math.random() * available.length)] ?? items[0];
+  if (available.length === 0) {
+    return previous;
+  }
+
+  return available[Math.floor(Math.random() * available.length)];
 }
 
 function renderSavedReasons() {
