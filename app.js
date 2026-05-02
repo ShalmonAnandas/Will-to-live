@@ -96,6 +96,7 @@ function chooseDifferent(items, previous) {
 
 function refreshText(element, value) {
   element.classList.remove("is-changing");
+  // Force a reflow so repeated button presses restart the gentle text animation.
   void element.offsetWidth;
   element.textContent = value;
   element.classList.add("is-changing");

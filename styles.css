@@ -39,7 +39,7 @@ button {
   background: var(--accent);
   cursor: pointer;
   font-weight: 700;
-  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  transition: transform 180ms ease, background 180ms ease;
 }
 
 button:hover,
@@ -392,10 +392,9 @@ h2 {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+    animation: none !important;
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+    transition: none !important;
   }
 }
 
