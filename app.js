@@ -29,6 +29,7 @@ const checklistItems = [
 ];
 
 const breathingCueIntervalMs = 4000;
+const maxSavedReasons = 12;
 
 const storageKeys = {
   reasons: "will-to-live-reasons",
@@ -76,7 +77,7 @@ function renderSavedReasons() {
     return;
   }
 
-  personalReasons.forEach((personalReason) => {
+  personalReasons.forEach((personalReason, index) => {
     const item = document.createElement("li");
     const text = document.createElement("span");
     const remove = document.createElement("button");
@@ -85,11 +86,9 @@ function renderSavedReasons() {
     remove.type = "button";
     remove.textContent = "Remove";
     remove.addEventListener("click", () => {
-      const reasonIndex = personalReasons.findIndex((reason) => reason === personalReason);
-      if (reasonIndex !== -1) {
-        personalReasons.splice(reasonIndex, 1);
-      }
-      saveJson(storageKeys.reasons, personalReasons);
+      const latestReasons = loadJson(storageKeys.reasons, []);
+      latestReasons.splice(index, 1);
+      saveJson(storageKeys.reasons, latestReasons);
       renderSavedReasons();
     });
 
@@ -140,7 +139,7 @@ reasonForm.addEventListener("submit", (event) => {
 
   const personalReasons = loadJson(storageKeys.reasons, []);
   personalReasons.unshift(value);
-  saveJson(storageKeys.reasons, personalReasons.slice(0, 12));
+  saveJson(storageKeys.reasons, personalReasons.slice(0, maxSavedReasons));
   reasonForm.reset();
   renderSavedReasons();
 });
