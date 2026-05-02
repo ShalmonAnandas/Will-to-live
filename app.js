@@ -28,6 +28,8 @@ const checklistItems = [
   "Rest without earning it"
 ];
 
+const breathingCueIntervalMs = 4000;
+
 const storageKeys = {
   reasons: "will-to-live-reasons",
   checklist: "will-to-live-checklist"
@@ -74,7 +76,7 @@ function renderSavedReasons() {
     return;
   }
 
-  personalReasons.forEach((personalReason, index) => {
+  personalReasons.forEach((personalReason) => {
     const item = document.createElement("li");
     const text = document.createElement("span");
     const remove = document.createElement("button");
@@ -83,7 +85,10 @@ function renderSavedReasons() {
     remove.type = "button";
     remove.textContent = "Remove";
     remove.addEventListener("click", () => {
-      personalReasons.splice(index, 1);
+      const reasonIndex = personalReasons.findIndex((reason) => reason === personalReason);
+      if (reasonIndex !== -1) {
+        personalReasons.splice(reasonIndex, 1);
+      }
       saveJson(storageKeys.reasons, personalReasons);
       renderSavedReasons();
     });
@@ -142,7 +147,7 @@ reasonForm.addEventListener("submit", (event) => {
 
 setInterval(() => {
   breathingCue.textContent = breathingCue.textContent === "Inhale" ? "Exhale" : "Inhale";
-}, 4000);
+}, breathingCueIntervalMs);
 
 renderSavedReasons();
 renderChecklist();
