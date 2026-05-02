@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Will to Live</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero" aria-labelledby="title">
+        <p class="eyebrow">one minute at a time</p>
+        <h1 id="title">Will to Live</h1>
+        <p class="lead">
+          A quiet place to breathe, remember what matters, and choose the next
+          small step.
+        </p>
+        <button id="reasonButton" class="primary" type="button">Give me a reason</button>
+        <p id="reason" class="reason" aria-live="polite">
+          You have survived every hard day before this one.
+        </p>
+      </section>
+
+      <section class="card" aria-labelledby="breathingTitle">
+        <h2 id="breathingTitle">Breathe with this</h2>
+        <div class="breathing">
+          <div class="orb" aria-hidden="true"></div>
+          <p id="breathingCue" aria-live="polite">Inhale</p>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="reasonsTitle">
+        <h2 id="reasonsTitle">My reasons</h2>
+        <form id="reasonForm" class="reason-form">
+          <label for="customReason">Add one thing worth staying for</label>
+          <div class="input-row">
+            <input id="customReason" name="customReason" type="text" maxlength="120" placeholder="A person, pet, song, place, promise...">
+            <button type="submit">Save</button>
+          </div>
+        </form>
+        <ul id="savedReasons" class="saved-reasons"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="groundingTitle">
+        <h2 id="groundingTitle">Next tiny step</h2>
+        <p id="groundingPrompt" class="prompt">
+          Name five things you can see.
+        </p>
+        <button id="promptButton" type="button">Another prompt</button>
+      </section>
+
+      <section class="card" aria-labelledby="checklistTitle">
+        <h2 id="checklistTitle">Today, just enough</h2>
+        <div id="checklist" class="checklist"></div>
+      </section>
+
+      <aside class="notice" aria-label="support note">
+        If you are in immediate danger, contact local emergency services or a
+        trusted person now. You do not have to do this alone.
+      </aside>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
