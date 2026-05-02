@@ -23,6 +23,7 @@ body {
     radial-gradient(circle at top left, rgba(155, 246, 255, 0.22), transparent 35rem),
     radial-gradient(circle at bottom right, rgba(255, 209, 102, 0.18), transparent 34rem),
     var(--bg);
+  overflow-x: hidden;
 }
 
 button,
@@ -38,11 +39,14 @@ button {
   background: var(--accent);
   cursor: pointer;
   font-weight: 700;
+  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
 }
 
 button:hover,
 button:focus-visible {
   background: var(--accent-strong);
+  box-shadow: 0 0 28px rgba(255, 209, 102, 0.28);
+  transform: translateY(-2px);
 }
 
 input {
@@ -65,6 +69,8 @@ label {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .hero,
@@ -75,6 +81,7 @@ label {
   background: var(--panel);
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
+  animation: riseIn 700ms ease both;
 }
 
 .hero {
@@ -83,6 +90,21 @@ label {
   padding: clamp(2rem, 8vw, 5rem);
   display: grid;
   align-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 8% 12% auto;
+  width: 14rem;
+  aspect-ratio: 1;
+  border: 1px solid rgba(155, 246, 255, 0.2);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(155, 246, 255, 0.16), transparent 65%);
+  animation: floatGlow 9s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .eyebrow {
@@ -130,9 +152,57 @@ h2 {
   font-weight: 800;
 }
 
+.sparkline {
+  width: min(28rem, 100%);
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.sparkline span {
+  height: 0.28rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-strong));
+  opacity: 0.7;
+  animation: shimmer 2.8s ease-in-out infinite;
+}
+
+.sparkline span:nth-child(2) {
+  animation-delay: 180ms;
+}
+
+.sparkline span:nth-child(3) {
+  animation-delay: 360ms;
+}
+
+.sparkline span:nth-child(4) {
+  animation-delay: 540ms;
+}
+
 .card,
 .notice {
   padding: 1.5rem;
+}
+
+.card:nth-of-type(2) {
+  animation-delay: 80ms;
+}
+
+.card:nth-of-type(3) {
+  animation-delay: 160ms;
+}
+
+.card:nth-of-type(4) {
+  animation-delay: 240ms;
+}
+
+.card:nth-of-type(5) {
+  animation-delay: 320ms;
+}
+
+.card:nth-of-type(6) {
+  animation-delay: 400ms;
 }
 
 .breathing {
@@ -201,6 +271,11 @@ h2 {
   font-weight: 800;
 }
 
+.reason.is-changing,
+.prompt.is-changing {
+  animation: textBloom 480ms ease;
+}
+
 .checklist label {
   display: flex;
   align-items: center;
@@ -217,6 +292,91 @@ h2 {
   color: var(--muted);
 }
 
+.ambient {
+  position: fixed;
+  width: 18rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(18px);
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.ambient-one {
+  top: 12%;
+  right: 7%;
+  background: var(--accent);
+  animation: drift 14s ease-in-out infinite;
+}
+
+.ambient-two {
+  bottom: 9%;
+  left: 5%;
+  background: var(--accent-strong);
+  animation: drift 16s ease-in-out infinite reverse;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(1.5rem, -1rem, 0) scale(1.08);
+  }
+}
+
+@keyframes floatGlow {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: translateY(-1rem) scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    transform: scaleX(0.55);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: scaleX(1);
+    opacity: 0.95;
+  }
+}
+
+@keyframes textBloom {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes breathe {
   0%,
   100% {
@@ -225,6 +385,17 @@ h2 {
 
   50% {
     transform: scale(1.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

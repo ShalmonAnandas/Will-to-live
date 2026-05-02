@@ -26,6 +26,7 @@ No build command is required. Vercel can serve the static files from the reposit
 
 - A breathing guide
 - Gentle grounding prompts
+- Quick calming exercises
 - A saved personal reasons list
 - A small daily survival checklist
 
