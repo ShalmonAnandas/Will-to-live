@@ -28,6 +28,7 @@ const checklistItems = [
   "Rest without earning it"
 ];
 
+// The cue changes halfway through the 8s CSS breathing cycle.
 const breathingCueIntervalMs = 4000;
 const maxSavedReasons = 12;
 
@@ -77,7 +78,7 @@ function renderSavedReasons() {
     return;
   }
 
-  personalReasons.forEach((personalReason, index) => {
+  personalReasons.forEach((personalReason) => {
     const item = document.createElement("li");
     const text = document.createElement("span");
     const remove = document.createElement("button");
@@ -87,7 +88,10 @@ function renderSavedReasons() {
     remove.textContent = "Remove";
     remove.addEventListener("click", () => {
       const latestReasons = loadJson(storageKeys.reasons, []);
-      latestReasons.splice(index, 1);
+      const reasonIndex = latestReasons.indexOf(personalReason);
+      if (reasonIndex !== -1) {
+        latestReasons.splice(reasonIndex, 1);
+      }
       saveJson(storageKeys.reasons, latestReasons);
       renderSavedReasons();
     });
